@@ -1,0 +1,52 @@
+[
+  {
+    "chargePointVendor": "VoltCharge Inc.",
+    "messageID": "msg-20250605-001",
+    "userInfo": {
+      "userID": "user-92384",
+      "authentication": {
+        "method": "RFID",
+        "token": "A7B9-C3D8"
+      },
+      "payment": {
+        "method": "credit_card",
+        "cardLast4": "5721",
+        "amount": 12.75,
+        "currency": "USD"
+      },
+      "session": {
+        "startTimestamp": "2025-06-05T10:15:00Z",
+        "endTimestamp": "2025-06-05T11:05:00Z"
+      }
+    },
+    "chargingStation": {
+      "vendor": "ChargeGrid",
+      "vendorID": "CG-001-US"
+    }
+  },
+  {
+    "chargePointVendor": "VoltCharge Inc.",
+    "messageID": "msg-20250605-002",
+    "userInfo": {
+      "userID": "user-92385",
+      "authentication": {
+        "method": "app_login",
+        "token": "XZ12-PQ67"
+      },
+      "payment": {
+        "method": "mobile_wallet",
+        "walletID": "apple_pay",
+        "amount": 9.00,
+        "currency": "USD"
+      },
+      "session": {
+        "startTimestamp": "2025-06-05T12:30:00Z",
+        "endTimestamp": "2025-06-05T13:10:00Z"
+      }
+    },
+    "chargingStation": {
+      "vendor": "ChargeGrid",
+      "vendorID": "CG-001-US"
+    }
+  }
+]
