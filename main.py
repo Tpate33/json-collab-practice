@@ -18,4 +18,14 @@ for i in data:
     print("Authetication Method: ", i['userInfo']['authentication']['method'])
     print()
 
+#task 4: Task 4: Total the Payment Amount
+payment_amount = 0
+for sessions in data:
+    payment_amount += sessions['userInfo']['payment']['amount']
+print("This is the total payment amount across all sessions " + str(payment_amount))
+print('\n')
 
+#Task 5: Filter Sessions by Payment Method
+for sessions in data:
+    if(sessions['userInfo']['payment']['method'] == 'credit_card'):
+        print(sessions)
