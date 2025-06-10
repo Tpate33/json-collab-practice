@@ -1,6 +1,10 @@
 import json
 from datetime import datetime, timedelta
 
+x = open('practice.json')
+data = json.load(x)
+print(data)
+
 # Task 1 (load json file):
 x = open("practice.json")
 data = json.load(x)
@@ -29,6 +33,7 @@ for i in data:
     
 print("Total Payment: $", totalAmount)
 print()
+
 
 # Task 5 : Filter Sessions by Payment Method
 print("Task 5: ")
@@ -163,3 +168,4 @@ def summarize_sessions(file_path):
         w.close()
 
 summarize_sessions("practice.json")
+
