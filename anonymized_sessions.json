@@ -1,0 +1,77 @@
+[
+    {
+        "chargePointVendor": "VoltCharge Inc.",
+        "messageID": "msg-20250605-001",
+        "userInfo": {
+            "userID": "anonymous",
+            "authentication": {
+                "method": "RFID",
+                "token": "A7B9-C3D8"
+            },
+            "payment": {
+                "method": "credit_card",
+                "cardLast4": "5721",
+                "amount": 12.75,
+                "currency": "USD"
+            },
+            "session": {
+                "startTimestamp": "2025-06-05T10:15:00Z",
+                "endTimestamp": "2025-06-05T11:05:00Z"
+            }
+        },
+        "chargingStation": {
+            "vendor": "ChargeGrid",
+            "vendorID": "CG-001-US"
+        }
+    },
+    {
+        "chargePointVendor": "VoltCharge Inc.",
+        "messageID": "msg-20250605-002",
+        "userInfo": {
+            "userID": "anonymous",
+            "authentication": {
+                "method": "app_login",
+                "token": "XZ12-PQ67"
+            },
+            "payment": {
+                "method": "mobile_wallet",
+                "walletID": "apple_pay",
+                "amount": 9.0,
+                "currency": "USD"
+            },
+            "session": {
+                "startTimestamp": "2025-06-05T12:30:00Z",
+                "endTimestamp": "2025-06-05T13:10:00Z"
+            }
+        },
+        "chargingStation": {
+            "vendor": "ChargeGrid",
+            "vendorID": "CG-001-US"
+        }
+    },
+    {
+        "chargePointVendor": "ElectraFast LLC",
+        "messageID": "msg-20250605-999",
+        "userInfo": {
+            "userID": "anonymous",
+            "authentication": {
+                "method": "app_qr",
+                "token": "QRC-74TZ"
+            },
+            "payment": {
+                "method": "mobile_wallet",
+                "cardLast4": "9842",
+                "amount": 18.5,
+                "currency": "USD"
+            },
+            "session": {
+                "startTimestamp": "2025-06-11T11:45:00Z",
+                "endTimestamp": "2025-06-11T12:25:00Z"
+            }
+        },
+        "chargingStation": {
+            "vendor": "GreenCharge",
+            "vendorID": "GC-903-IL"
+        }
+    }
+]
