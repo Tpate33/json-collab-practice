@@ -5,8 +5,7 @@
         "userInfo": {
             "userID": "anonymous",
             "authentication": {
-                "method": "RFID",
-                "token": "A7B9-C3D8"
+                "method": "RFID"
             },
             "payment": {
                 "method": "credit_card",
@@ -30,8 +29,7 @@
         "userInfo": {
             "userID": "anonymous",
             "authentication": {
-                "method": "app_login",
-                "token": "XZ12-PQ67"
+                "method": "app_login"
             },
             "payment": {
                 "method": "mobile_wallet",
@@ -55,8 +53,7 @@
         "userInfo": {
             "userID": "anonymous",
             "authentication": {
-                "method": "app_qr",
-                "token": "QRC-74TZ"
+                "method": "app_qr"
             },
             "payment": {
                 "method": "mobile_wallet",

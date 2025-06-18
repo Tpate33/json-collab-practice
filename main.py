@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+import csv
 
 x = open('practice.json')
 data = json.load(x)
@@ -77,10 +78,10 @@ for i in data:
     my_list.append(i['userInfo']['userID'])
 
 
-for k in my_list:
-    if (k not in same_list):
-        print(k, "has", my_list.count(k), "sessions")
-        same_list.append(k)
+for j in my_list:
+    if (j not in same_list):
+        print(j, "has", my_list.count(j), "sessions")
+        same_list.append(j)
 print()
 # print(my_list)
 
@@ -200,7 +201,23 @@ w.close()
 print()
 
 
-# Task 3: Group Sessions by Vendor
+# Task 3: Group Sessions by Vendor Name
+print("Task 3: Group Sessions by Vendor")
+vendorName_list = []
+my_dict = {}
+for i in data:
+    if (i['chargingStation']['vendor'] not in vendorName_list):
+        vendorName_list.append(i['chargingStation']['vendor'])
+        my_dict[i['chargingStation']['vendor']] = []
+
+for k in vendorName_list:
+    for p in data:
+        if (p['chargingStation']['vendor'] == k):
+            my_dict[k].append(p)
+
+print(my_dict)
+print()
+
 
 # Task 4: Find the Longest Session
 print("Task 4: Longest Session")
@@ -216,6 +233,7 @@ for i in data:
 
         duration = end_time - start_time
         duration_minutes = duration.total_seconds() / 60
+        
         if (duration_minutes > longest):
             longest = duration_minutes
             userID = i['userInfo']['userID']
@@ -228,26 +246,74 @@ print()
 # Task 5: Anonymize User Info
 print("Task 5: Anonymize User Info")
 anonymized_list = []
-newData = data
-for i in newData:
+for i in data:
     anonymized_list.append(i)
+    #Tast 5 Pt. 2 Removing Token
+    del i['userInfo']['authentication']['token']
+
 
 for k in anonymized_list:
     k['userInfo']['userID'] = 'anonymous'
+
+
 
 anonymized_string = json.dumps(anonymized_list, indent = 4)
 w = open("anonymized_sessions.json", "w")
 w.write(anonymized_string)
 w.close()
+print(anonymized_string)
 print()
+
 
 # Problen with Task 5: causing userID to be permantely changed to anonymous, gets rid of actual userID
 
 
 # Task 6 Currency Conversion
+x = open('practice.json')
+data = json.load(x)
+x.close()
 print("Task 6: Currency Conversion (USD > EUR)")
 for i in data:
    # rounds the long divison to the second place value
    euro = round(i['userInfo']['payment']['amount'] / 0.93, 2)
    i["amountEUR"] =  euro
    print(i)
+   print()
+   
+
+
+# Task 7
+print("Task 7: Format and Export Summary CSV")
+csv_list = []
+for i in data:
+    # caculate duration
+    start_str = i['userInfo']['session']['startTimestamp']
+    end_str = i['userInfo']['session']['endTimestamp']
+
+    # turns string into format YYYY-MM-DD HH-MM-MS (Date, Time)
+    start_time = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%SZ")
+    end_time = datetime.strptime(end_str, "%Y-%m-%dT%H:%M:%SZ")
+
+    duration = end_time - start_time
+    duration_minutes = duration.total_seconds() / 60
+
+    session_csv = {
+        'UserID' : i['userInfo']['userID'],
+        'Vendor' : i['chargingStation']['vendor'],
+        'Amount' : i['userInfo']['payment']['amount'],
+        'Duration' : duration_minutes
+    }
+
+    csv_list.append(session_csv)
+    with open("summary_csv", 'w', newline='') as file:
+        fieldnames = ['UserID', 'Vendor', 'Amount', 'Duration']
+        writer = csv.DictWriter(file, fieldnames = fieldnames)
+        writer.writeheader()
+        writer.writerows(csv_list)
+
+for i in csv_list:
+    print(i)
+print()
+
+
+
