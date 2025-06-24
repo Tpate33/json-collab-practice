@@ -1,5 +1,6 @@
 import json
-from datetime import datetime, timedelta
+import copy
+from datetime import datetime
 
 # task 1 (load json file):
 x = open("practice.json")
@@ -30,7 +31,8 @@ print('\n')
 for sessions in data:
     if(sessions['userInfo']['payment']['method'] == 'credit_card'):
         print(sessions)
-    print()
+ 
+print()
 
 #Task 6: Print Session Duration
 for session in data:
@@ -93,7 +95,7 @@ f.close()
 
 
 #Task 10: Make It a Function
-def summarize_sessions(file_path):
+def summarize_sessions(file_path,file_name):
     x = open(file_path)
     data = json.load(x)
     x.close()
@@ -124,8 +126,74 @@ def summarize_sessions(file_path):
 
     #Task 9: Write Summary to a New JSON File
     json_string = json.dumps(summary_list, indent=4)
-    f = open("summary_output.json", "w")
+    f = open(file_name, "w")
     f.write(json_string)
     f.close()
 
-summarize_sessions("practice.json")
+# summarize_sessions("practice.json","summary_test.json")
+
+#✅ Phase 2 – Intermediate JSON Practice Tasks
+#Task 2: Remove All Sessions with Mobile Wallet Payments
+filter_payment_list = []
+for sessions in data:
+    if(sessions['userInfo']['payment']['method'] != 'mobile_wallet'):
+        filter_payment_list.append(sessions)
+
+json_string = json.dumps(filter_payment_list, indent=4)
+f = open("filterd_sessions.json", "w")
+f.write(json_string)
+f.close()
+
+# #Task 3: Group Sessions by Vendor
+# vendor_dict = {}
+# for sessions in data:
+#     vendor_dict[sessions['userInfo']['']]
+
+
+#Task 4: Find the Longest Session
+largest_duration = 0
+longest_user_id = ""
+longest_message_id = ""
+for sessions in data:
+    start_str = sessions['userInfo']['session']['startTimestamp'] #Gets string for Start duration of current session
+    end_str = sessions['userInfo']['session']['endTimestamp'] #Gets string for End duration of current session
+
+    # Convert the timestamp strings to datetime objects
+    start_time = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%SZ") 
+    end_time = datetime.strptime(end_str, "%Y-%m-%dT%H:%M:%SZ")
+
+    duration = end_time - start_time #Gives military time of EndTime - StartTime
+    duration_minutes = duration.total_seconds() / 60 #Converts into an actual integer (Miuntes)
+
+    if(duration_minutes > largest_duration):
+        largest_duration = duration_minutes
+        longest_user_id = session['userInfo']['userID']
+        longest_message_id = session['messageID']
+
+# Print results
+print("Longest Session Info:")
+print("User ID:", longest_user_id)
+print("Message ID:", longest_message_id)
+print("Duration (minutes):", largest_duration)
+
+#Task 5: Anonymize User Info
+anonymize_data = copy.deepcopy(data)
+for sessions in anonymize_data:
+    sessions['userInfo']['userID'] = "anonymous"
+    del sessions['userInfo']['authentication']['token']
+
+json_string = json.dumps(anonymize_data, indent=4)
+f = open("anonymized_sessions.json", "w")
+f.write(json_string)
+f.close()
+
+#Task 6: Currency Conversion
+def usd_to_eur(usd_amount, exchange_rate):
+    return round(usd_amount * exchange_rate, 2)
+
+for sessions in data:
+    sessions['userInfo']['payment']['amountEUR'] = usd_to_eur(sessions['userInfo']['payment']['amount'],0.93)
+    print(sessions['userInfo']['payment']['amountEUR'])
+
+#Task 7: Format and Export Summary CSV
+
