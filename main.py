@@ -1,5 +1,6 @@
 import json
 import copy
+import csv
 from datetime import datetime
 
 # task 1 (load json file):
@@ -145,9 +146,22 @@ f.write(json_string)
 f.close()
 
 # #Task 3: Group Sessions by Vendor
-# vendor_dict = {}
-# for sessions in data:
-#     vendor_dict[sessions['userInfo']['']]
+print("Task 3: Group Sessions by Vendor")
+vendorName_list = []
+my_dict = {}
+for i in data:
+    if (i['chargingStation']['vendor'] not in vendorName_list):
+        vendorName_list.append(i['chargingStation']['vendor'])
+        my_dict[i['chargingStation']['vendor']] = []
+for k in vendorName_list:
+    for p in data:
+        if (p['chargingStation']['vendor'] == k):
+            my_dict[k].append(p)
+print(vendorName_list)
+print()
+print(my_dict)
+print()
+
 
 
 #Task 4: Find the Longest Session
@@ -196,4 +210,30 @@ for sessions in data:
     print(sessions['userInfo']['payment']['amountEUR'])
 
 #Task 7: Format and Export Summary CSV
+#userID, vendor, amount, and durationMinutes.
+csvfile = open("session_summary.csv", "w", newline='')
+writer = csv.writer(csvfile)
 
+# Write the header
+writer.writerow(["userID", "vendor", "amount", "durationMinutes"])
+
+for session in data:
+    user = session["userInfo"]['userID']
+
+    start_str = session['userInfo']['session']['startTimestamp'] #Gets string for Start duration of current session
+    end_str = session['userInfo']['session']['endTimestamp'] #Gets string for End duration of current session
+
+    # Convert the timestamp strings to datetime objects
+    start_time = datetime.strptime(start_str, "%Y-%m-%dT%H:%M:%SZ") 
+    end_time = datetime.strptime(end_str, "%Y-%m-%dT%H:%M:%SZ")
+
+    
+    duration = end_time - start_time #Gives military time of EndTime - StartTime
+    duration_minutes = duration.total_seconds() / 60 #Converts into an actual integer (Miuntes)
+
+    amount = session['userInfo']['payment']['amount']
+
+    vendor = session['chargingStation']['vendor']
+    writer.writerow([user, vendor, amount, round(duration_minutes, 2)])
+
+csvfile.close()
