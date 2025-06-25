@@ -1,7 +1,14 @@
+# Author: Karen M and Taufeeq P
+# Date: 06/18/2025
+# Description: EV Charging Session Analyzer
+
+
 import json
 from datetime import datetime, timedelta
 import csv
 
+
+# Phase 1
 x = open('practice.json')
 data = json.load(x)
 print(data)
@@ -13,11 +20,13 @@ data = json.load(x)
 x.close()
 print()
 
+
 # Task 2 (Print all message id):
 print("Task 2: Printing All MessageID")
 for i in data:
     print(i["messageID"])
 print()
+
 
 # Task 3 : Print User Authentication Methods (userID and authentication)
 print("Task 3: Printing User Authentication Methods")
@@ -68,6 +77,7 @@ for i in data:
     print()
 print()
 
+
 # Task 7 : Count Sessions per User using list
 print("Task 7: User Session Count using List")
 my_list = []
@@ -77,7 +87,6 @@ same_list = []
 for i in data:
     my_list.append(i['userInfo']['userID'])
 
-
 for j in my_list:
     if (j not in same_list):
         print(j, "has", my_list.count(j), "sessions")
@@ -86,7 +95,7 @@ print()
 # print(my_list)
 
 
-# Task 7 : Count Sessions per User using dictionary
+# Task 7 : Count Sessions per User using dictionary (Taufeeq's Method)
 print("Task 7: User Session Count using Dict")
 session_count = {}
 for session in data:
@@ -103,7 +112,6 @@ print()
 print("Task 8: Creating Summary Dictionary")
 my_list = []
 for i in data:
-
     # caculate duration
     start_str = i['userInfo']['session']['startTimestamp']
     end_str = i['userInfo']['session']['endTimestamp']
@@ -121,8 +129,8 @@ for i in data:
         'Duration' : duration_minutes
     }
 
-
     my_list.append(session_summary)
+
 print(my_list)
 print()
 
@@ -161,9 +169,8 @@ def summarize_sessions(file_path):
             'Amount' : i['userInfo']['payment']['amount'],
             'Duration' : duration_minutes
         }
-
-
         my_list.append(session_summary)
+
 
     # Task 9
         json_string = json.dumps(my_list, indent = 4)
@@ -255,8 +262,6 @@ for i in data:
 for k in anonymized_list:
     k['userInfo']['userID'] = 'anonymous'
 
-
-
 anonymized_string = json.dumps(anonymized_list, indent = 4)
 w = open("anonymized_sessions.json", "w")
 w.write(anonymized_string)
@@ -265,17 +270,14 @@ print(anonymized_string)
 print()
 
 
-# Problen with Task 5: causing userID to be permantely changed to anonymous, gets rid of actual userID
-
-
 # Task 6 Currency Conversion
 x = open('practice.json')
 data = json.load(x)
 x.close()
 print("Task 6: Currency Conversion (USD > EUR)")
 for i in data:
-   # rounds the long divison to the second place value
-   euro = round(i['userInfo']['payment']['amount'] / 0.93, 2)
+   # rounds to the second place value
+   euro = round(i['userInfo']['payment']['amount'] * 0.93, 2)
    i["amountEUR"] =  euro
    print(i)
    print()
@@ -317,3 +319,5 @@ print()
 
 
 
+
+# Phase 3A
