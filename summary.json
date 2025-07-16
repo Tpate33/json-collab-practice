@@ -1,0 +1,17 @@
+[
+    {
+        "UserID": "user-92384",
+        "Amount": 12.75,
+        "Duration": 50.0
+    },
+    {
+        "UserID": "user-92385",
+        "Amount": 9.0,
+        "Duration": 40.0
+    },
+    {
+        "UserID": "user-84721",
+        "Amount": 18.5,
+        "Duration": 40.0
+    }
+]
